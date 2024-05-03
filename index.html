@@ -3,76 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clicker Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-        #click-button {
-            padding: 15px 30px;
-            font-size: 1.5rem;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            outline: none;
-        }
-        #click-button:hover {
-            background-color: #45a049;
-        }
-        #score {
-            font-size: 1.2rem;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Clicker Game</h1>
-    <button id="click-button">Click Me!</button>
-    <div id="score">Score: <span id="score-value">0</span></div>
-
-    <script>
-        // Получаем сохраненный счет из локального хранилища
-        var savedScore = localStorage.getItem('clickerScore');
-        var score = savedScore ? parseInt(savedScore) : 0; // Если счета нет, устанавливаем его в 0
-        var clickButton = document.getElementById('click-button');
-        var scoreValue = document.getElementById('score-value');
-
-        // Обновляем отображение счета
-        scoreValue.textContent = score;
-
-        // Функция для обработки клика
-        function handleClick() {
-            score++;
-            scoreValue.textContent = score;
-            // Сохраняем счет в локальное хранилище
-            localStorage.setItem('clickerScore', score.toString());
-        }
-
-        // Добавляем обработчик клика
-        clickButton.addEventListener('click', handleClick);
-    </script>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login via Telegram</title>
     <style>
         body {
@@ -104,8 +34,5 @@
 </head>
 <body>
     <a class="telegram-button" href="https://t.me/YOUR_BOT_USERNAME?start=login">Login via Telegram</a>
-</body>
-</html>
-
 </body>
 </html>
