@@ -36,6 +36,8 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
+        }
+        .roll {
             animation: roll 0.5s ease-in-out forwards;
         }
         @keyframes roll {
@@ -52,13 +54,30 @@
 
     <script>
         var coinCount = 0;
-        var coin = document.getElementById('coin');
         var coinCountDisplay = document.getElementById('coin-count');
 
-        coin.addEventListener('click', function() {
+        document.getElementById('coin').addEventListener('click', function() {
             coinCount++;
-            coinCountDisplay.textContent = coinCount;
+            updateCoinCountDisplay();
         });
+
+        function updateCoinCountDisplay() {
+            var currentCount = parseInt(coinCountDisplay.textContent);
+            var delta = coinCount - currentCount;
+            var step = Math.sign(delta) * Math.ceil(Math.abs(delta) / 10);
+            var timer = setInterval(function() {
+                currentCount += step;
+                coinCountDisplay.textContent = currentCount;
+                if ((step > 0 && currentCount >= coinCount) || (step < 0 && currentCount <= coinCount)) {
+                    coinCountDisplay.textContent = coinCount;
+                    clearInterval(timer);
+                }
+            }, 50);
+            coinCountDisplay.classList.add('roll');
+            setTimeout(function() {
+                coinCountDisplay.classList.remove('roll');
+            }, 500);
+        }
     </script>
 </body>
 </html>
