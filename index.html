@@ -21,6 +21,7 @@
             position: relative;
             width: 80%;
             max-width: 400px; /* Максимальная ширина контейнера для мобильных устройств */
+            margin-bottom: 20px;
         }
         #coin {
             position: absolute;
@@ -30,16 +31,15 @@
             cursor: pointer;
         }
         #score {
-            font-size: 1.2rem;
-            margin-top: 20px;
+            font-size: 2rem;
         }
     </style>
 </head>
 <body>
-    <div id="game-container">
-        <img id="coin" src="https://www.foroffice.rufd/upload/iblock/0d1/usn_business_305.jpg" alt="Coin">
-    </div>
     <div id="score">Coins: <span id="coin-count">0</span></div>
+    <div id="game-container">
+        <img id="coin" src="INSERT_IMAGE_URL_HERE" alt="Coin">
+    </div>
 
     <script>
         var coinCount = 0;
@@ -48,8 +48,22 @@
 
         coin.addEventListener('click', function() {
             coinCount++;
-            coinCountDisplay.textContent = coinCount;
+            updateCoinCountDisplay();
         });
+
+        function updateCoinCountDisplay() {
+            var currentCount = parseInt(coinCountDisplay.textContent);
+            var delta = coinCount - currentCount;
+            var step = Math.sign(delta) * Math.ceil(Math.abs(delta) / 10);
+            var timer = setInterval(function() {
+                currentCount += step;
+                coinCountDisplay.textContent = currentCount;
+                if ((step > 0 && currentCount >= coinCount) || (step < 0 && currentCount <= coinCount)) {
+                    coinCountDisplay.textContent = coinCount;
+                    clearInterval(timer);
+                }
+            }, 50);
+        }
     </script>
 </body>
 </html>
