@@ -30,7 +30,7 @@
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s;
-            outline: none; /* убираем рамку вокруг кнопки при клике */
+            outline: none;
         }
         #click-button:hover {
             background-color: #45a049;
@@ -47,14 +47,25 @@
     <div id="score">Score: <span id="score-value">0</span></div>
 
     <script>
-        var score = 0;
+        // Получаем сохраненный счет из локального хранилища
+        var savedScore = localStorage.getItem('clickerScore');
+        var score = savedScore ? parseInt(savedScore) : 0; // Если счета нет, устанавливаем его в 0
         var clickButton = document.getElementById('click-button');
         var scoreValue = document.getElementById('score-value');
 
-        clickButton.addEventListener('click', function() {
+        // Обновляем отображение счета
+        scoreValue.textContent = score;
+
+        // Функция для обработки клика
+        function handleClick() {
             score++;
             scoreValue.textContent = score;
-        });
+            // Сохраняем счет в локальное хранилище
+            localStorage.setItem('clickerScore', score.toString());
+        }
+
+        // Добавляем обработчик клика
+        clickButton.addEventListener('click', handleClick);
     </script>
 </body>
 </html>
