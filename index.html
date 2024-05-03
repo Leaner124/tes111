@@ -29,6 +29,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
+            touch-action: manipulation; /* Предотвращает масштабирование страницы при быстрых кликах на мобильных устройствах */
         }
         #score {
             font-size: 2rem;
@@ -41,8 +42,18 @@
             animation: roll 0.5s ease-in-out forwards;
         }
         @keyframes roll {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            0% {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            50% {
+                transform: translateY(10px);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
     </style>
 </head>
