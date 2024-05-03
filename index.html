@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login via Telegram</title>
+    <title>Clicker Game</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,26 +13,43 @@
             padding: 0;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
-        .telegram-button {
-            padding: 15px 30px;
-            font-size: 18px;
-            background-color: #0088cc;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s;
+        #game-container {
+            position: relative;
+            width: 80%;
+            max-width: 400px; /* Максимальная ширина контейнера для мобильных устройств */
         }
-        .telegram-button:hover {
-            background-color: #005580;
+        #coin {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+        #score {
+            font-size: 1.2rem;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <a class="telegram-button" href="https://t.me/Testgamegpu_bot?start=login">Login via Telegram</a>
+    <div id="game-container">
+        <img id="coin" src="INSERT_IMAGE_URL_HERE" alt="Coin">
+    </div>
+    <div id="score">Coins: <span id="coin-count">0</span></div>
+
+    <script>
+        var coinCount = 0;
+        var coin = document.getElementById('coin');
+        var coinCountDisplay = document.getElementById('coin-count');
+
+        coin.addEventListener('click', function() {
+            coinCount++;
+            coinCountDisplay.textContent = coinCount;
+        });
+    </script>
 </body>
 </html>
