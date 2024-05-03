@@ -67,5 +67,45 @@
         // Добавляем обработчик клика
         clickButton.addEventListener('click', handleClick);
     </script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login via Telegram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .telegram-button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .telegram-button:hover {
+            background-color: #005580;
+        }
+    </style>
+</head>
+<body>
+    <a class="telegram-button" href="https://t.me/YOUR_BOT_USERNAME?start=login">Login via Telegram</a>
+</body>
+</html>
+
 </body>
 </html>
