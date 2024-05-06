@@ -1,34 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Авторизация</title>
-    <!-- Подключаем стили Telegram Login Widget -->
-    <link rel="stylesheet" href="https://telegram.org/css/telegram-widget.css?7">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кликер</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    #counter {
+        font-size: 48px;
+        color: #333;
+    }
+    #clicker {
+        font-size: 24px;
+        padding: 15px 30px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+    #clicker:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
 <body>
-    <!-- Этот блок будет содержать кнопку Telegram Login Widget -->
-    <div id="telegram-auth"></div>
+    <div id="counter">0</div>
+    <button id="clicker">Нажми на меня!</button>
 
-    <!-- Скрипт для инициализации Telegram Login Widget -->
-    <script type="text/javascript" src="https://telegram.org/js/telegram-widget.js?7" async></script>
-    <script type="text/javascript">
-        // Инициализируем Telegram Login Widget
-        var loginButton = document.getElementById('telegram-auth');
-        TelegramLoginWidget.init({
-            bot_id: '7096168862', // Замените 'your_bot_id' на ID вашего бота Telegram
-            size: 'large', // Размер кнопки ('small', 'medium', 'large')
-            radius: false, // Скругление углов кнопки (true/false)
-            userpic: false, // Показывать аватар пользователя (true/false)
-            request_access: 'write', // Запрашивать доступ на чтение или запись (по умолчанию - 'write')
-            lang: 'en', // Язык кнопки ('en', 'ru', 'uk', 'es', 'it', 'fr', 'de', 'fa', 'zh', 'ar', 'pt', 'ko', 'tr', 'ja')
-            onLogin: function(user) {
-                // Функция, которая будет вызвана после успешной авторизации пользователя
-                console.log(user);
-                // Можно отправить данные пользователя на сервер для аутентификации
-            }
-        }, loginButton);
+    <script>
+        // Получаем элементы счетчика и кнопки
+        var counter = document.getElementById("counter");
+        var button = document.getElementById("clicker");
+
+        // Инициализируем счетчик кликов
+        var clickCount = 0;
+
+        // Обновляем отображение счетчика
+        function updateCounter() {
+            counter.textContent = clickCount;
+        }
+
+        // Добавляем обработчик события клика на кнопку
+        button.addEventListener("click", function() {
+            // Увеличиваем счетчик кликов на 1
+            clickCount++;
+            // Обновляем отображение счетчика
+            updateCounter();
+        });
+
+        // Инициализация отображения счетчика
+        updateCounter();
     </script>
 </body>
 </html>
