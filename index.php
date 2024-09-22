@@ -1,138 +1,104 @@
-﻿<!DOCTYPE html>
+<?php
+// API URL и ключ
+$api_url = 'https://sociogramm.ru/panel/api/v1';
+$api_key = 'y9As1h4G3FU6uIlyg2x3cJDgEGTRmLHH';
+
+// Параметры POST-запроса
+$post_data = [
+    'key' => $api_key,
+    'action' => 'services'
+];
+
+// Инициализация cURL
+$ch = curl_init($api_url);
+
+// Настройки cURL
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+// Выполнение запроса и получение ответа
+$response = curl_exec($ch);
+
+// Проверка на наличие ошибок
+if (curl_errno($ch)) {
+    echo 'Ошибка запроса: ' . curl_error($ch);
+    curl_close($ch);
+    exit;
+}
+
+// Закрываем cURL
+curl_close($ch);
+
+// Декодируем ответ JSON
+$services = json_decode($response, true);
+
+// Проверка, что данные получены
+if (!$services) {
+    echo "Не удалось получить данные от API.";
+    exit;
+}
+
+// Выводим список услуг
+?>
+
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Основное меню</title>
+    <title>Список услуг</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        h1 {
-            text-align: center;
+        table, th, td {
+            border: 1px solid black;
         }
-        .menu {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 20px;
+        th, td {
+            padding: 8px;
+            text-align: left;
         }
-        .button {
-            display: block;
-            background-color: #007bff;
-            color: white;
-            padding: 15px;
-            border: none;
-            border-radius: 5px;
-            text-align: center;
-            text-decoration: none;
-            margin: 10px 0;
-            transition: background-color 0.3s;
-        }
-        .button:hover {
-            background-color: #0056b3;
-        }
-        .back-button {
-            background-color: #6c757d;
-        }
-        .back-button:hover {
-            background-color: #5a6268;
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
-    <h1>Основное меню</h1>
-    <div class="menu">
-        <a href="#" class="button" onclick="showBots()">Боты</a>
-        <a href="#" class="button" onclick="showMyBots()">Мои боты</a>
-        <a href="#" class="button" onclick="showReferrals()">Рефералы</a>
-        <a href="#" class="button" onclick="showSettings()">Настройки</a>
-    </div>
-
-    <div id="content"></div>
-
-    <script>
-        function showBots() {
-            const content = `
-                <h2>Список ботов</h2>
-                <div class="menu">
-                    <a href="#" class="button" onclick="openBot('GETON')">@FarmGetonBot</a>
-                    <a href="#" class="button" onclick="openBot('SHREK')">@shrekston_bot</a>
-                    <a href="#" class="button" onclick="openBot('SPEPE')">@SPEPEDROPBot</a>
-                    <a href="#" class="button" onclick="openBot('TIGER')">@tiger_drop_bot</a>
-                    <a href="#" class="button" onclick="openBot('TON')">@toncryptodropbot</a>
-                    <a href="#" class="button" onclick="openBot('GEMZ')">@gemzcoin_bot</a>
-                    <a href="#" class="button back-button" onclick="showMainMenu()">Назад</a>
-                </div>
-            `;
-            document.getElementById('content').innerHTML = content;
-        }
-
-        function openBot(bot) {
-            const content = `
-                <h2>${bot} - Меню</h2>
-                <div class="menu">
-                    <a href="https://t.me/bots_ref1" class="button" target="_blank">Играть</a>
-                    <a href="#" class="button" onclick="showReferrals('${bot}')">Рефералы</a>
-                    <a href="#" class="button" onclick="showInstructions()">Инструкция</a>
-                    <a href="#" class="button" onclick="addMyBot('${bot}')">Добавить в Мои боты</a>
-                    <a href="#" class="button" onclick="setAlarm('${bot}')">Будильник</a>
-                    <a href="#" class="button back-button" onclick="showBots()">Назад</a>
-                </div>
-            `;
-            document.getElementById('content').innerHTML = content;
-        }
-
-        function showReferrals(bot) {
-            const count = prompt("Введите количество рефералов (мин 5, макс 1000):");
-            if (count >= 5 && count <= 1000) {
-                alert(`Вы хотите купить ${count} рефералов для ${bot}.`);
-            } else {
-                alert("Неверное количество рефералов.");
-            }
-        }
-
-        function showInstructions() {
-            const content = `
-                <h2>Инструкция</h2>
-                <p>Привет, как дела?</p>
-                <img src="https://t.me/bots_pic_instr" alt="Инструкция" style="width:100%; max-width:400px;">
-                <a href="https://t.me/bots_instr" class="button" target="_blank">Полная инструкция</a>
-                <a href="#" class="button back-button" onclick="showBots()">Назад</a>
-            `;
-            document.getElementById('content').innerHTML = content;
-        }
-
-        function addMyBot(bot) {
-            alert(`${bot} добавлен в ваши боты.`);
-        }
-
-        function setAlarm(bot) {
-            const time = prompt("Введите время в минутах (мин 15, макс 600):");
-            if (time >= 15 && time <= 600) {
-                alert(`Будильник установлен на ${time} минут для ${bot}.`);
-            } else {
-                alert("Неверное время.");
-            }
-        }
-
-        function showMyBots() {
-            // Логика для отображения списка ваших ботов
-            alert("Список ваших ботов будет здесь.");
-        }
-
-        function showReferrals() {
-            // Логика для отображения информации о рефералах
-            alert("Информация о рефералах будет здесь.");
-        }
-
-        function showSettings() {
-            alert("Настройки находятся в разработке.");
-        }
-    </script>
+    <h1>Список услуг</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Название услуги</th>
+                <th>Категория</th>
+                <th>Цена (за 1000)</th>
+                <th>Мин. заказ</th>
+                <th>Макс. заказ</th>
+                <th>Описание</th>
+                <th>Dripfeed</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!empty($services)) : ?>
+                <?php foreach ($services as $service) : ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($service['name']); ?></td>
+                        <td><?php echo htmlspecialchars($service['category']); ?></td>
+                        <td><?php echo htmlspecialchars($service['rate']); ?></td>
+                        <td><?php echo htmlspecialchars($service['min']); ?></td>
+                        <td><?php echo htmlspecialchars($service['max']); ?></td>
+                        <td><?php echo htmlspecialchars($service['desc']); ?></td>
+                        <td><?php echo htmlspecialchars($service['dripfeed'] ? 'Да' : 'Нет'); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <tr>
+                    <td colspan="7">Услуги не найдены.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
 </body>
 </html>
