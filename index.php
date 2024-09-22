@@ -21,7 +21,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 // Выполнение запроса и получение ответа
 $response = curl_exec($ch);
 
-// Проверка на наличие ошибок
+// Проверка на наличие ошибок cURL
 if (curl_errno($ch)) {
     echo 'Ошибка запроса: ' . curl_error($ch);
     curl_close($ch);
@@ -31,12 +31,24 @@ if (curl_errno($ch)) {
 // Закрываем cURL
 curl_close($ch);
 
+// Выведем полученный ответ для отладки
+echo '<pre>';
+echo "Ответ от API:\n";
+print_r($response);  // Выводим ответ от API
+echo '</pre>';
+
 // Декодируем ответ JSON
 $services = json_decode($response, true);
 
+// Проверим, если ли ошибки при декодировании JSON
+if (json_last_error() !== JSON_ERROR_NONE) {
+    echo 'Ошибка при декодировании JSON: ' . json_last_error_msg();
+    exit;
+}
+
 // Проверка, что данные получены
 if (!$services) {
-    echo "Не удалось получить данные от API.";
+    echo "Не удалось получить данные от API или пустой ответ.";
     exit;
 }
 
